@@ -1,0 +1,20 @@
+class Solution {
+    public int maxSubArray(int[] nums) {
+        // res 用来保存最大子序的和
+        int res = nums[0];
+        // sum 计算当前子序的和
+        int sum = 0;
+        for (int num : nums) {
+            if (sum > 0) {
+                // 当前子序大于0，则继续加入num
+                sum += num;
+            } else {
+                // 子序小于 0，重新找最大子序
+                sum = num;
+            }
+            // res 和 sum 进行比较，将最大值赋值给 res
+            res = Math.max(res, sum);
+        }
+        return res;
+    }
+}
