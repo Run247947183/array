@@ -1,0 +1,24 @@
+class Solution {
+    public int maxProfit(int[] prices) {
+        // 题目提示尽可能的完成多比交易
+        // 只要比之前买入的价格高就可以卖出
+        if (prices.length < 2) {
+            return 0;
+        }
+        // 用来统计总共赚的
+        int sum = 0;
+        // 买入的价格
+        int minBuy = prices[0];
+        for (int i = 1; i < prices.length; i++) {
+            // 第二天比之前买入的价格低，那么就交换
+            if (prices[i] < minBuy) {
+                minBuy = prices[i];
+            }
+            if (prices[i] > minBuy) {
+                sum += prices[i] - minBuy;
+                minBuy = prices[i];
+            }
+        }
+        return sum;
+    }
+}
