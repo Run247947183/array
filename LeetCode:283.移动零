@@ -1,0 +1,19 @@
+class Solution {
+    public void moveZeroes(int[] nums) {
+        if (nums == null || nums.length <= 1) {
+            return;
+        }
+        int index = 0;
+        // 如果该元素不为 0 则将该元素放到 index 的位置上
+        // index++        
+        for (int num : nums) {
+            if (num != 0) {
+                nums[index++] = num;
+            }
+        }
+        // 将剩下的元素都设置为 0 
+        for (int i = index; i < nums.length; i++) {
+            nums[i] = 0;
+        }
+    }
+}
