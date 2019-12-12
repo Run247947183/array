@@ -1,0 +1,38 @@
+class Solution {
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+        // 先把每个数放在它该出现的位置
+        // 例如 1 应该被放在下标为 0 的位置，如果下标为 0 的位置已经是 1 了
+        // 那么说明 1 重复出现了，此时将这个数设置为 -1
+        // 最后再次遍历数组，将数字为 -1 的元素设置为 该下标 + 1 就是原本正确的数字
+        for (int i = 0; i < nums.length;) {
+            int pos = nums[i];
+            // pos 等于 i + 1 说明该位置的正确数字就是 pos
+            // pos 等于 -1 说明之前已经将某个数设置为了 -1
+            // 继续遍历下一个数字
+            if (pos == -1 || i == pos - 1) {
+                i++;
+                continue;
+            }
+            // pos - 1 就是 pos 这个数正确的位置所在
+            // 如果该位置已经有了 pos，那么说明该数字重复了
+            if (nums[pos - 1] == pos) {
+                nums[i] = -1;
+                i++;
+                continue;
+            }
+            // 如果以上两种情况都不符合
+            // 那么就需要交换数字，把这个数字换到正确的位置
+            int tmp = nums[pos - 1];
+            nums[pos - 1] = nums[i];
+            nums[i] = tmp;
+        }
+        // 开始重新遍历数组，将 -1 设置为正确的数字
+        List<Integer> list = new ArrayList<>();
+        for (int j = 0; j < nums.length; j++) {
+            if (nums[j] == -1) {
+                list.add(j + 1);
+            }
+        }
+        return list;
+    }
+}
