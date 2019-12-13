@@ -1,0 +1,54 @@
+class Solution {
+    public int thirdMax(int[] nums) {
+        if (nums.length == 1) {
+            return nums[0];
+        }
+        if (nums.length == 2) {
+            return Math.max(nums[0], nums[1]);
+        }
+        // max1 为第一大的数字
+        int max1 = Integer.MIN_VALUE;
+        // max2 为第二大的数字
+        int max2 = Integer.MIN_VALUE;
+        // max3 为第三大的数字
+        int max3 = Integer.MIN_VALUE;
+        boolean f = true;
+        // count很重要，用来记录数组中不重复的数字和重复数字只取一个的总和是否大于3
+        int count = 0;
+        for (int num : nums) {
+            if (num == Integer.MIN_VALUE && f) {
+                // f 用来判断数字为Integer.MIN_VALUE是否出现了两次
+                // 如果出现了两次，第二次将 f 置为 false;
+                // 这样 count 就不会接着增加了
+                count++;
+                f = false;
+            }
+            if (num > max1) {
+                count++;
+                // 将第二大的值传给第三大
+                max3 = max2;
+                // 将第一大的值传给第二大
+                max2 = max1;
+                // 将比最大值还大的数字传给第一大
+                max1 = num;
+            } else if (num > max2 && num < max1) {
+                count++;
+                // 将第二大的值先传给第三大
+                max3 = max2;
+                // 更新 max2 的值
+                max2 = num;
+            } else if (num > max3 && num < max2) {
+                count++;
+                // 更新 max3 的值
+                max3 = nums;
+            }
+        }
+        // 如果 count 大于或等于 3
+        // 说明数组中不重复的数字和重复数字只取一个的总和大于3
+        // 则返回第三大的值
+        // 否则返回第一大的值
+        // 注意：如果数组出现重复的数字，第二次遍历到该数字的时候不会有任何更新操作
+        // 会接着遍历下一个数字
+        return count >= 3 ? max3 : max1;
+    }
+}
