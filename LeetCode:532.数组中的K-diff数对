@@ -1,0 +1,27 @@
+class Solution {
+    public int findPairs(int[] nums, int k) {
+        // 不要用到绝对值的方法，因为后面继续遍历时处理较为复杂
+        if (k < 0) {
+            return 0;
+        }
+        Map<Integer, Integer> map = new HashMap<>();
+        int count = 0;
+        for (int x : nums) {
+            map.put(x, map.getOrDefault(x, 0) + 1);
+        }
+        if (k == 0) {
+            for (int num1 : map.keySet()) {
+                if (map.get(num1) > 1) {
+                    count++;
+                }
+            }
+        } else {
+            for (int num2 : map.keySet()) {
+                if (map.containsKey(num2 + k)) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+}
