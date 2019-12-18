@@ -1,0 +1,19 @@
+class Solution {
+    public int pivotIndex(int[] nums) {
+        int sumLeft = 0;
+        for (int num : nums) {
+            sumLeft += num;
+        }
+        int sumRight = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sumLeft -= nums[i];
+            // 当 sumLeft 减后先进行判断是否和 sumRight 相等
+            if (sumLeft == sumRight) {
+                return i;
+            }
+            // 如果不相等再将 nums[i] 加给 sumRight
+            sumRight += nums[i];
+        }
+        return -1;
+    }
+}
