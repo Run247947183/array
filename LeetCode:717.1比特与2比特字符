@@ -1,0 +1,17 @@
+class Solution {
+    public boolean isOneBitCharacter(int[] bits) {
+        for (int i = 0; i < bits.length; i++) {
+            // 如果 i 的位置能走到 bits.length - 1,那么成功了
+            if (i == bits.length - 1) {
+                return true;
+            }
+            // 因为如果当前位置是 1 那么无论下一个元素是多少
+            // 都会构成两比特，因为 1 单独不能构成比特
+            // 此时 i++ ，相当于跳过下一个元素
+            if (bits[i] == 1) {
+                i++;
+            }
+        }
+        return false;
+    }
+}
