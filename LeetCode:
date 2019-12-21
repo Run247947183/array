@@ -1,0 +1,32 @@
+class Solution {
+    public int maxDistToClosest(int[] seats) {
+        if (seats.length == 2) {
+            return 1;
+        }
+        int max = 0;
+        // index 是 1 的标志位
+        // 哪个索引下数值为 1 ，index 就更新为索引
+        int index = -1;
+        for (int i = 0; i < seats.length; i++) {
+            if (i == 0 && seats[i] == 1) {
+                index = 0;;
+            } else if (i != 0 && seats[i] == 1) {
+                if (index != -1) {
+                    // 如果两个 1 之间的 0 个数为奇数
+                    // 那么 i - index / 2 刚好是奇数位置到 1 的距离
+                    // 如果是偶数，那么结果会是到最近 1 的距离
+                    max = Math.max(max, (i - index) / 2);
+                } else {
+                    max = Math.max(max, i);
+                }
+                index = i;
+                // 这里需要判断一下
+                // 如果最后一位数是 1 ，那么情况和之前相同不需要下面的 else if 语句
+                // 但是如果最后一位数是 0 ，那么需要特殊处理一下
+            } else if (i == seats.length - 1 && seats[i] == 0) {
+                max = Math.max(max, i - index);
+            }
+        }
+        return max;
+    }
+}
