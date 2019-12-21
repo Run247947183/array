@@ -1,0 +1,31 @@
+class Solution {
+    public int[] fairCandySwap(int[] A, int[] B) {
+        int[] res = new int[2];
+        int sumA = 0;
+        int sumB = 0;
+        for (int num : A) {
+            sumA += num;
+        }
+        for (int num2 : B) {
+            sumB += num2;
+        }
+        // 将 A 和 B 按从小到大排序好
+        Arrays.sort(A);
+        Arrays.sort(B);
+        int tmp = sumA - (sumA + sumB) / 2;
+        int i = 0;
+        int j = 0;
+        while (i < A.length && j < B.length) {
+            if (A[i] - B[j] == tmp) {
+                res[0] = A[i];
+                res[1] = B[j];
+                break;
+            } else if (A[i] - B[j] > tmp) {
+                j++;
+            } else {
+                i++;
+            }
+        }
+        return res;
+    }
+}
