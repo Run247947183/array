@@ -1,0 +1,36 @@
+
+class Solution {
+    public boolean hasGroupsSizeX(int[] deck) {
+        if(deck.length < 2) return false;
+	HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+	for(int n : deck){
+	    if(!map.containsKey(n)){
+	        map.put(n, 1);
+	    }else{
+	       int size = map.get(n) + 1;
+	       map.put(n, size);
+	    }
+	}
+	//求最小值	
+	int minSize = Integer.MAX_VALUE;
+	for(int key : map.keySet()){
+	    minSize = Math.min(minSize, map.get(key));
+	}
+	if(minSize < 2) return false;
+	
+	//判断最小值与其他值是否存在除1外的最大公约数
+	for(int key : map.keySet()){
+	    int m = map.get(key);
+	    if(m != minSize){
+		int n = minSize, k = 0;
+		while((k = m % n) != 0){
+		    m = n;
+		    n = k;
+		}
+		if(n == 1) return false;
+	    }
+	}
+		
+	return true;
+    }
+}
