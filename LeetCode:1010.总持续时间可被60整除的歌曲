@@ -1,0 +1,19 @@
+class Solution {
+    public int numPairsDivisibleBy60(int[] time) {
+        // 如果一个比 60 小的数除 60 ，那么结果为小的数
+        // 例如 30 除 60，结果就为 30
+        // 如果两个数 % 60 的结果加起来为60，那么说明这两个相加是 60 的倍数
+        int[] res = new int[60];
+        int count = 0;
+        for (int x : time) {
+            x = x % 60;
+            if (x != 0) {
+                count += res[60 - x];
+            } else {
+                count += res[x];
+            }
+            res[x]++;
+        }
+        return count;
+    }
+}
