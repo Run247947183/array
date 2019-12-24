@@ -1,0 +1,35 @@
+class Solution {
+    public List<String> commonChars(String[] A) {
+        List<String> list = new ArrayList<>();
+        // 先将字符串数组的第一个字符串用整数数组表示出来
+        int[] res = new int[26];
+        for (char c : A[0].toCharArray()) {
+            // 因为都是小写字母，所以减去 'a' 之后会是26以内的一个整数
+            res[c - 'a']++;
+        }
+        for (int i = 1; i < A.length; i++) {
+            int[] tmp = new int[26];
+            // 和上面相同，也需要整数数组来表示当前字符串
+            for (char x : A[i].toCharArray()) {
+                tmp[x - 'a']++;
+            }
+            // 进行两个整数数组的判断，取最小值
+            // 因为最小值，就是两个字符串公共的部分
+            for (int j = 0; j < 26; i++) {
+                res[j] = Math.min(res[j], tmp[j]);
+            }
+        }
+        // 最后将 res 的内容重新用字符串表示，然后加入 list 之中去
+        for (int k = 0; k < res.length; k++) {
+            if (res[k] > 0) {
+                // 这里注意，有可能 res 中每个元素值为 2
+                // 那么就代表这些字符串公共部分字符出现了2次
+                for (int m = 0; m < res[k]; m++) {
+                    // 先转换为字符，再转换为字符串
+                    list.add(((char)(k + 'a') + ""));
+                }
+            }
+        }
+        return list;
+    }
+}
