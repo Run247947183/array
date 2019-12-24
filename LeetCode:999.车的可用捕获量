@@ -1,0 +1,28 @@
+class Solution {
+    public int numRookCaptures(char[][] board) {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                // 先找到车
+                if (board[i][j] == 'R') {
+                    // 先四面寻找卒
+                    return find(board, i, j, 0, 1) + find(board, i, j, 1, 0)
+                    + find(board, i, j, 0, -1) + find(board, i, j, -1, 0);
+                }
+            }
+        }
+        return 0;
+    }
+    private int find(char[][] arr, int x, int y, int sizeX, int sizeY) {
+        // 需要设置 x, y 的范围大小
+        // 如果碰到象，那么就不能再往下查找卒了
+        while (x >= 0 && x < arr.length && y >= 0
+             && y < arr[x].length && arr[x][y] != 'B') {
+            if (arr[x][y] == 'p') {
+                return 1;
+            }
+            x += sizeX;
+            y += sizeY;
+        }
+        return 0;
+    }
+}
