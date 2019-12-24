@@ -1,0 +1,32 @@
+class Solution {
+    public int countCharacters(String[] words, String chars) {
+        Map<Character, Integer> map = helper(chars);
+        StringBuilder sb = new StringBuilder();
+        Map<Character, Integer> map2 = null;
+        for (int i = 0; i < words.length; i++) {
+            map2 = helper(words[i]);
+            Set<Character> set = map2.keySet();
+            boolean flag = true;
+            for (Character x : set) {
+                if (map.containsKey(x)) {
+                    if (map.get(x) < map2.get(x)) {
+                        flag = false;
+                    } 
+                } else {
+                    flag = false;
+                }
+            }
+            if (flag) {
+                sb.append(words[i]);
+            }
+        }
+        return sb.length();
+    }
+    private Map<Character, Integer> helper(String str) {
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < str.length(); i++) {
+            map.put(str.charAt(i), map.getOrDefault(str.charAt(i), 0) + 1);
+        }
+        return map;
+    }
+}
