@@ -1,0 +1,44 @@
+class Solution {
+    public boolean canThreePartsEqualSum(int[] A) {
+        // 主要思路是将数组的总和除3，得到目标值
+        // 利用双指针的方法，如果能在前后两个部分找到和都为目标值
+        // 那么说明有三个部分值和相同，否则失败
+        int sum = 0;
+        for (int x : A) {
+            sum += x;
+        }
+        if (sum % 3 != 0) {
+            return false;
+        }
+        int num = sum / 3; // 目标值
+        int left = 0; // 左指针
+        int right = A.length - 1; // 右指针
+        int one = 0; // 第一部分的值
+        int three = 0; // 第三部分的值
+        boolean flag1 = true; // 判断第一部分是否查找完成
+        boolean flag2 = true; // 判断第三部分是否查找完成
+        while (left + 1 < right) {
+            if (flag1) {
+                one += A[left];
+                if (one == num) {
+                    flag1 = false;
+                } else {
+                    left++;
+                }
+            }
+            if (flag2) {
+                three += A[right];
+                if (three == num) {
+                    flag2 = false;
+                } else {
+                    right--;
+                }
+            }
+            // 如果两部分都查找成功，那么说明该函数能等值分为三个部分
+            if ((!flag1) && (!flag2)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
