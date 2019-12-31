@@ -1,0 +1,35 @@
+class Solution {
+    public int[] numSmallerByFrequency(String[] queries, String[] words) {
+        int[] arr = new int[queries.length];
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < words.length; i++) {
+            int num = minSize(words[i]);
+            map.put(i, num);
+        }
+        for (int j = 0; j < queries.length; j++) {
+            int num2 = minSize(queries[j]);
+            for (int s : map.keySet()) {
+                if (map.get(s) > num2) {
+                    arr[j]++;
+                }
+            }
+        }
+        return arr;
+    }
+    public int minSize(String word) {
+        char[] array = word.toCharArray();
+        char min = array[0];
+        for (int i = 1; i < array.length; i++) {
+            if (array[i] < min) {
+                min = array[i];
+            }
+        }
+        int count = 0;
+        for (char x : array) {
+            if (x == min) {
+                count++;
+            }
+        }
+        return count;
+    }   
+}
