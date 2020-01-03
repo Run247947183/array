@@ -1,0 +1,26 @@
+class Solution {
+    public List<List<Integer>> shiftGrid(int[][] grid, int k) {
+        // 用一个数组来保存迁移后的结果
+        int[] res = new int[grid[0].length * grid.length];
+        List<List<Integer>> list = new ArrayList<>();
+        int x = grid.length;
+        int y = grid[0].length;
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                // 利用 k % 数组长度就为迁移后的位置来保存元素
+                k = k % res.length;
+                res[k++] = grid[i][j];
+            }
+        }
+        k = 0; // 需要将 k 重置为 0，方便后面添加进 List
+        for (int i = 0; i < x; i++) {
+            List<Integer> list2 = new ArrayList<>();
+            for (int j = 0; j < y; j++) {
+                list2.add(res[k++]);
+            }
+            // 添加完一行后加入二维的数组中
+            list.add(list2);
+        }
+        return list;
+    }
+}
