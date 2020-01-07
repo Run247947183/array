@@ -1,0 +1,29 @@
+class Solution {
+    public int[] sumZero(int n) {
+        if (n == 1) {
+            return new int[1];
+        }
+        int[] arr = new int[n];
+        int mid = n / 2;
+        if (n % 2 != 0) {
+            int max = (n - 1) / 2;
+            for (int i = 0; i < n; i++) {
+                if (i == mid) {
+                    arr[i] = 0;
+                    break;
+                }
+                arr[i] = max;
+                arr[n - i - 1] = -max;
+                max -= 1;
+            }
+        } else {
+            int tmp = n;
+            for (int j = 0; j < n; j += 2) {
+                arr[j] = tmp;
+                arr[j + 1] = -tmp;
+                tmp++;
+            }
+        }
+        return arr;
+    }
+}
