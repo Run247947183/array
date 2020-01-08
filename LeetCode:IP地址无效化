@@ -1,0 +1,20 @@
+class Solution {
+    public String defangIPaddr(String address) {
+        String result="";
+		String moment="";
+		int acount=0;
+		char[] a = address.toCharArray();
+		for(int i=0; i<address.length();i++) {
+			if (a[i]=='.') {	
+				moment = "";
+				for(int j=acount+1;j<i;j++)	
+				result += String.valueOf(a[j]);
+				result += "[.]";
+				acount = i;	
+			}else {	
+				moment+= String.valueOf(a[i]);
+			}
+		}		
+		return String.valueOf(a[0])+result+moment;  
+    }
+}
