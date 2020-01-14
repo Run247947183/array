@@ -1,0 +1,38 @@
+public String tictactoe(int[][] moves) {
+        
+        int[][] map = new int[3][3];
+        for (int i = 0; i < moves.length; i++) {
+
+            boolean isA = i % 2 == 0;
+            map[moves[i][0]][moves[i][1]] = isA ? 1 : 2;
+            if (check(map)) 
+                return isA ? "A" : "B";
+        }
+
+        if (moves.length == 9)
+            return "Draw";
+        else
+            return "Pending";
+    }
+
+
+    public boolean check(int[][] map) {
+
+        if (map[0][0] != 0 && map[0][0] == map[0][1] && map[0][1] == map[0][2])
+            return true;
+        if (map[1][0] != 0 && map[1][0] == map[1][1] && map[1][1] == map[1][2])
+            return true;
+        if (map[2][0] != 0 && map[2][0] == map[2][1] && map[2][1] == map[2][2])
+            return true;
+        if (map[0][0] != 0 && map[0][0] == map[1][0] && map[1][0] == map[2][0])
+            return true;
+        if (map[0][1] != 0 && map[0][1] == map[1][1] && map[1][1] == map[2][1])
+            return true;
+        if (map[0][2] != 0 && map[0][2] == map[1][2] && map[1][2] == map[2][2])
+            return true;
+        if (map[0][0] != 0 && map[0][0] == map[1][1] && map[1][1] == map[2][2])
+            return true;
+        if (map[0][2] != 0 && map[0][2] == map[1][1] && map[1][1] == map[2][0])
+            return true;
+        return false;    
+    }
