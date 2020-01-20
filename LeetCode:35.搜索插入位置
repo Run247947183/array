@@ -13,3 +13,29 @@ class Solution {
         return nums.length;
     }
 }
+
+
+// 方法二：
+class Solution {
+    public int searchInsert(int[] nums, int target) {
+        int i = nums.length - 1;
+        for (; i >= 0; i--) {
+            if (nums[i] > target) {
+                if (i == 0) {
+                    return 0;
+                } else {
+                    continue;
+                }
+            } else if (nums[i] == target) {
+                break;
+            } else {
+                if (i == nums.length - 1) {
+                    return nums.length;
+                } else {
+                    return i + 1;
+                }
+            }
+        }
+        return i;
+    }
+}
