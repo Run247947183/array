@@ -24,3 +24,30 @@ class Solution {
         return digits;
     }
 }
+
+// 方法二：
+class Solution {
+    public int[] plusOne(int[] digits) {
+        int pos = digits.length - 1;
+        int tmp = 1;
+        while (tmp > 0 && pos >= 0) {
+            if (digits[pos] + tmp < 10) {
+                digits[pos] += tmp;
+                tmp = 0;
+            } else {
+                if (pos == 0) {
+                    int[] arr = new int[digits.length + 1];
+                    arr[0] = 1;
+                    arr[1] = 0;
+                    for (int i = 2; i < arr.length; i++) {
+                        arr[i] = digits[i - 1];
+                    }
+                    return arr; 
+                }
+                digits[pos] = 0;
+                pos--;
+            }
+        }
+        return digits;
+    }
+}
