@@ -17,3 +17,32 @@ class Solution {
         return -1;
     }
 }
+
+// 方法二：
+class Solution {
+    public int pivotIndex(int[] nums) {
+        if (nums.length < 3) {
+            return -1;
+        }
+        int midPos = 0;
+        while (midPos < nums.length) {
+            int leftNum = 0;
+            int rightNum = 0;
+            for (int i = 0; i < midPos; i++) {
+                leftNum += nums[i];
+            }
+            for (int j = nums.length - 1; j > midPos; j--) {
+                rightNum += nums[j];
+            }
+            if (leftNum == rightNum) {
+                return midPos;
+            } else {
+                midPos++;
+            }
+        }
+        if (midPos == nums.length) {
+            return -1;
+        } 
+        return midPos;
+    }
+}
