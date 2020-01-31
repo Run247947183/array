@@ -1,0 +1,39 @@
+class Solution {
+    public int compress(char[] chars) {
+        if (chars.length <= 1) {
+            return chars.length;
+        }
+        int k = 0; // k 记录最终压缩后字符串的长度
+        int count = 1; // count 记录相同字符的数量
+        for (int i = 0; i < chars.length - 1; i++) {
+            // 注意:范围是 chars.length - 1
+            if (chars[i] == chars[i + 1]) {
+                // 当前字符和下一个字符相同，则 count++
+                count++;
+            } else {
+                // 不相同，则先添加该字符到 k 下标处
+                chars[k++] = chars[i];
+                // count > 1 说明之前有该字符相同的数量
+                if (count > 1) {
+                    for (char c : String.valueOf(count).toCharArray()) {
+                        // 将 count 转换成字符形式加入 chars 中
+                        chars[k++] = c;
+                    }
+                }
+                count = 1;
+            }
+        }
+        // 还不知道 chars[chars.length - 1] 和 chars[chars.length - 2] 是否相同
+        // 如果两者不同：则说明最后一个元素只有 1 个该元素相同的数量
+        if (chars[chars.length - 1] != chars[chars.length - 2]) {
+            chars[k++] = chars[chars.length - 1];
+        } else {
+            // 如果相同，则之前 count 也记录的相同的数量
+            chars[k++] = chars[chars.length - 1];
+            for (char c : String.valueOf(count).toCharArray()) {
+                chars[k++] = c;
+            }
+        }
+        return k;
+    }
+}
