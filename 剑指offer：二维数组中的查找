@@ -1,0 +1,41 @@
+// 方法一：暴力求解法
+public class Solution {
+    public boolean Find(int target, int [][] array) {
+        if (array.length == 0 || array == null) {
+            return false;
+        }
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                if (target == array[i][j]) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
+
+// 方法二：从二维数组的左下角开始找，假设用 row 来表示行，用 col 来表示列
+// target > array[row][col] 则表示 target 比这一列的最小值大，那么要从下一列去找，col++;
+// target < array[row][col] 则表示 target 比这一行的最大值小，那么要从上一行取找，row--;
+public class Solution {
+    public boolean Find(int target, int [][] array) {
+        if (array.length == 0 || array[0].length == 0) {
+            return false;
+        }
+        int row = array.length - 1;
+        int col = 0;
+        while (row >= 0 && col < array[0].length) {
+            if (target > array[row][col]) {
+                col++;
+            } else if (target < array[row][col]) {
+                row--;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+// 方法三和方法二道理相同，从右上方开始去找
