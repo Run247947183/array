@@ -1,0 +1,68 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        while (scanner.hasNext()) {
+            int size = scanner.nextInt(); // 桌子数量
+            int batch = scanner.nextInt(); // 顾客批数
+            int[] desk = new int[size]; // 储存每张桌子的最大容纳数量
+            for (int i = 0; i < size; i++) {
+                desk[i] = scanner.nextInt();
+            }
+            // 将 desk 按从小到大的顺序排列好
+            Arrays.sort(desk);
+            // queue 将顾客按照消费金额进行从大到小的排序
+            PriorityQueue<Person> queue = new PriorityQueue<>();
+            for (int j = 0; j < batch; j++) {
+                int num = scanner.nextInt();
+                int money = scanner.nextInt();
+                // 这批顾客的人数 num 小于或等于最大桌子容纳量,则添加入queue
+                if (num <= desk[size - 1]) {
+                    queue.add(new Person(num, money));
+                }
+            }
+            // 判断 i 桌子是否有顾客了
+            boolean[] tag = new boolean[size]; 
+            long sum = 0; // 计算总收益
+            int count = 0; // 计算桌子有顾客的数量
+            while (!queue.isEmpty()) {
+                Person p = queue.poll();
+                for (int i = 0; i < size; i++) {
+                    // 满足 num 小于或等于这个桌子的最大容纳量
+                    // 和当前桌子没有顾客这两个条件则入座
+                    if (p.num <= desk[i] && !tag[i]) {
+                        sum += p.money;
+                        count++;
+                        tag[i] = true;
+                        break;
+                    }
+                }
+                if (count == size) {
+                    break;
+                }
+            }
+            System.out.println(sum);
+        }
+    }
+
+   static class Person implements Comparable<Person> {
+        private int num;
+        private int money;
+        
+        public Person(int num, int money) {
+            this.num = num;
+            this.money = money;
+        }
+        
+        public int compareTo(Person o) {
+            if (this.money > o.money) {
+                return -1;
+            } else if (this.money < o.money) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+    }
+}
