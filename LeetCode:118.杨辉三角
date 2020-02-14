@@ -1,0 +1,24 @@
+class Solution {
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> res = new ArrayList<>();
+        // 观察杨辉三角可知，每行的元素数量就为第 n 行的 n
+        // 从第一行开始一直到 numRows + 1 行结束
+        for (int i = 1; i < numRows + 1; i++) {
+            List<Integer> list = new ArrayList<>();
+            for (int j = 0; j < i; j++) {
+                if (j == 0 || j == i - 1) {
+                    // 添加头和尾的元素 1 
+                    list.add(1);
+                } else {
+                    // 中间的数是上一行List<Integer>的 j - 1 元素和 j 元素之和
+                    // 注意：这里需要多减去 1 ，因为我们把开始 i 设置为 1 而不是 0
+                    List<Integer> tmp = res.get(i - 1 - 1);
+                    list.add(tmp.get(j - 1) + tmp.get(j));
+                }
+            }
+            // 每行元素添加完后，加入 res 中
+            res.add(list);
+        }
+        return res;
+    }
+}
