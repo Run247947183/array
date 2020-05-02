@@ -1,0 +1,34 @@
+
+public int[] solve (int n, int q, int[] a, int[] p) {
+        // write code here
+        // 询问一次p的意思是要有p个桶的体积一样
+        // 然后每次达到p个桶的体积一样的最少时间,输出到 返回数组中
+        Arrays.sort(a);
+        int[] ans = new int[q];
+        for (int i = 0; i < q; i++) {
+            int min = Integer.MAX_VALUE, minJ = 0;
+            int sum = 0;
+            for (int m = 0; m < p[i]; m++) {
+                sum += a[m];
+            }
+            min = a[p[i] - 1] * p[i] - sum;
+            for (int j = 1; j <= a.length - p[i]; j++) {
+                /*
+                for (int k = 0; k < p[i]; k++){
+                    sum += a[j + k];
+                }
+                */
+                sum -= a[j - 1];
+                sum += a[j + p[i] - 1];
+                if (a[j + p[i] - 1] * p[i] - sum < min) {
+                    minJ = j;
+                    min = a[j + p[i] - 1] * p[i] - sum;
+                }
+            }
+            ans[i] = min;
+            for (int l = minJ; l < minJ + p[i] - 1; l++) {
+                a[l] = a[minJ + p[i] - 1];
+            }
+        }
+        return ans;
+    }
