@@ -1,0 +1,37 @@
+# array
+数组
+class Solution {
+    // 暴力思想：将数组中的元素假如 HashMap 中
+    // 从 1 开始判断是否存在在 map 中，存在则 + 1接着判断，否则直接返回结果
+    // hashMap最大的功能就是快速的判断某一个元素是否存在于map中，可以按照这种思想对数组改造，我们发现最小的正整数范围是[1,N]，最大则为 N + 1，刚好数组的长度为 N，可以利用这一点，对数组改造，先将数组中负数替换成不影响结果的正整数，然后将数组中元素范围是[1,N]的元素 - 1作为下标，找到该位置将其元素变为负数进行标记，表示该位置下标 + 1的正整数在数组中出现过
+    public int firstMissingPositive(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 1;
+        }
+        // 先将数组中负数替换成不影响结果的正数
+        int len = nums.length;
+        for (int i = 0; i < len; i++) {
+            if (nums[i] <= 0) {
+                nums[i] = len + 1;
+            }
+        }
+        for (int i = 0; i < len; i++) {
+            int num = Math.abs(nums[i]);
+            if (num <= len) {
+                // 注意：因为可能存在重复相同的正整数，所以nums[num - 1] 可能已经是负数
+                if (nums[num - 1] < 0) {
+                    continue;
+                }
+                nums[num - 1] = -nums[num - 1];
+            }
+        }
+        // 最后遍历数组，出现第一个整数的下标 + 1 就为最小的正整数
+        for (int i = 0; i < len; i++) {
+            if (nums[i] > 0) {
+                return i + 1;
+            }
+        }
+        // 否则结果为 长度 + 1
+        return len + 1;
+    }
+}
