@@ -1,0 +1,25 @@
+# array
+数组
+class Solution {
+    // 修改原数组，取该元素 - 1 作为下标，找到下标位置，将该下标位置元素修改为负数
+    // 最终遍历数组，正数的位置 + 1就是没有出现过的元素
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+        List<Integer> list = new ArrayList<>();
+        int len = nums.length;
+        if (nums == null || len == 0) {
+            return list;
+        }
+        for (int i = 0; i < len; i++) {
+            int pos = Math.abs(nums[i]) - 1;
+            if (nums[pos] > 0) {
+                nums[pos] = -nums[pos];
+            }
+        }
+        for (int i = 1; i <= len; i++) {
+            if (nums[i - 1] > 0) {
+                list.add(i);
+            }
+        }
+        return list;
+    }
+}
